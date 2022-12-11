@@ -14,8 +14,12 @@ namespace GatewayLab2.Managers
         public IEnumerable<Payment> GetPayments()
         {
             string json = this.GetResources("api/v1/Payments/GetPayments");
-            IEnumerable<Payment> payments = JsonSerializer.Deserialize<IEnumerable<Payment>>(json);
-            return payments;
+            if(json != null)
+            {
+                IEnumerable<Payment> payments = JsonSerializer.Deserialize<IEnumerable<Payment>>(json);
+                return payments;
+            }
+            return null;
         }
 
         public double GetReservationCost(double price, DateTime start, DateTime end)

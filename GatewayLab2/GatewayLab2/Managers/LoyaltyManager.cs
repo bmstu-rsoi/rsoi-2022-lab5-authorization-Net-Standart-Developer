@@ -14,8 +14,12 @@ namespace GatewayLab2.Managers
         public IEnumerable<Loyalty> GetLoyalties()
         {
             string json = this.GetResources("api/v1/Loyalty/GetLoyalties");
-            IEnumerable<Loyalty> loyalties = JsonSerializer.Deserialize<IEnumerable<Loyalty>>(json);
-            return loyalties;
+            if(json != null)
+            {
+                IEnumerable<Loyalty> loyalties = JsonSerializer.Deserialize<IEnumerable<Loyalty>>(json);
+                return loyalties;
+            }
+            return null;
         }
 
         public int GetDiscount(Loyalty loyalty)

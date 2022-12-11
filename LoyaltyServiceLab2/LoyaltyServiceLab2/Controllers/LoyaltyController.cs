@@ -19,7 +19,7 @@ namespace LoyaltyServiceLab2.Controllers
                 this.db.Loyalties.Add(new Loyalty()
                 {
                     ID= 1,
-                    Username= "Test Max",
+                    Username= "Max",
                     Reservation_Count= 25,
                     Status= "GOLD",
                     Discount= 10,
@@ -27,8 +27,6 @@ namespace LoyaltyServiceLab2.Controllers
 
                 db.SaveChanges();
             }
-
-            Console.WriteLine("loyalty");
         }
 
         [HttpGet]

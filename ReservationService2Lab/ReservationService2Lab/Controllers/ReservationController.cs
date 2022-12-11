@@ -30,8 +30,6 @@ namespace ReservationService2Lab.Controllers
 
                 db.SaveChanges();
             }
-
-            Console.WriteLine("Start reservation");
         }
 
         [HttpGet]

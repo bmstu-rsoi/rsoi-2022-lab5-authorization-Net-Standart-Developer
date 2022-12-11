@@ -1,0 +1,60 @@
+version: "3"
+services:
+  gateway:
+    image: csdevcore/gateway
+    build: ./GatewayLab2/GatewayLab2/
+    ports:
+      - "8080:80"
+    environment:
+      - RESERVATION=reservation:80
+      - PAYMENT=payment:80
+      - LOYALTY=loyalty:80
+
+  reservation:
+    image: csdevcore/reservation
+    build: ./ReservationService2Lab/ReservationService2Lab/
+    ports:
+      - "8070:80"
+    environment:
+      - DBHOST=postgres2
+      - DBPORT=5432
+      - DATABASE=reservations
+      - USERNAME=program
+      - PASSWORD=test
+
+  payment:
+    image: csdevcore/payment
+    build: ./PaymentServiceLab2/PaymentServiceLab2/
+    ports:
+      - "8060:80"
+    environment:
+      - DBHOST=postgres2
+      - DBPORT=5432
+      - DATABASE=payments
+      - USERNAME=program
+      - PASSWORD=test
+
+  loyalty:
+    image: csdevcore/loyalty
+    build: ./LoyaltyServiceLab2/LoyaltyServiceLab2/
+    ports:
+      - "8050:80"
+    environment:
+      - DBHOST=postgres2
+      - DBPORT=5432
+      - DATABASE=loyalties
+      - USERNAME=program
+      - PASSWORD=test
+
+  postgres2:
+    image: library/postgres:13
+    container_name: postgres2
+    restart: on-failure
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: postgres
+    volumes:
+      - ./postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - "54321:5432"

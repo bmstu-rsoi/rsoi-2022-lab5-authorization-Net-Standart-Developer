@@ -2,12 +2,12 @@
 
 namespace GatewayLab2.Views
 {
-    public class UserInfoResponse
+    public class UserInfoResponse<T>
     {
         [JsonPropertyName("reservations")]
         public IEnumerable<ReservationResponse> Reservations { get; set; }
 
         [JsonPropertyName("loyalty")]
-        public LoyaltyInfoResponse Loyalty { get; set; }
+        public T Loyalty { get; set; }
     }
 }

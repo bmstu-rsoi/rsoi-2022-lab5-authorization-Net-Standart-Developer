@@ -15,9 +15,10 @@ namespace LoyaltyServiceLab2.Models
         {
             string host = Environment.GetEnvironmentVariable("DBHOST") ?? "localhost";
             string port = Environment.GetEnvironmentVariable("DBPORT") ?? "54321";
-            string db = Environment.GetEnvironmentVariable("DATABASE") ?? "loyalty";
-            string user = Environment.GetEnvironmentVariable("USERNAME") ?? "program";
+            string db = Environment.GetEnvironmentVariable("DATABASE") ?? "loyalties";
+            string user = "program";
             string password = Environment.GetEnvironmentVariable("PASSWORD") ?? "test";
+
             optionsBuilder.UseNpgsql($"Host={host};Port={port};Database={db};Username={user};Password={password}");
         }
     }

@@ -14,15 +14,24 @@ namespace GatewayLab2.Managers
         public IEnumerable<Hotel> GetHotels()
         {
             string json = this.GetResources("api/v1/Reservation/GetHotels");
-            IEnumerable<Hotel> hotels = JsonSerializer.Deserialize<IEnumerable<Hotel>>(json);
-            return hotels;
+            if(json != null)
+            {
+                IEnumerable<Hotel> hotels = JsonSerializer.Deserialize<IEnumerable<Hotel>>(json);
+                return hotels;
+            }
+
+            return null;
         }
 
         public IEnumerable<Reservation> GetReservations()
         {
             string json = this.GetResources("api/v1/Reservation/GetReservations");
-            IEnumerable<Reservation> reservations = JsonSerializer.Deserialize<IEnumerable<Reservation>>(json);
-            return reservations;
+            if(json != null)
+            {
+                IEnumerable<Reservation> reservations = JsonSerializer.Deserialize<IEnumerable<Reservation>>(json);
+                return reservations;
+            }
+            return null;
         }
 
         public Reservation BookHotel(string username, Hotel hotel, Payment payment, DateTime startDate, DateTime endDate)

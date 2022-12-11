@@ -13,49 +13,64 @@ namespace GatewayLab2.Managers
 
         protected string GetResources(string path)
         {
-            WebRequest request = WebRequest.Create($"http://{Host}/{path}");
-            request.Credentials = CredentialCache.DefaultCredentials;
+            try
+            {
+                WebRequest request = WebRequest.Create($"http://{Host}/{path}");
+                request.Credentials = CredentialCache.DefaultCredentials;
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
 
-            string responseFromServer = reader.ReadToEnd();
+                string responseFromServer = reader.ReadToEnd();
 
-            reader.Close();
-            dataStream.Close();
-            response.Close();
+                reader.Close();
+                dataStream.Close();
+                response.Close();
 
-            return responseFromServer;
+                return responseFromServer;
+            }
+            catch(WebException ex)
+            {
+                // сервис не доступен
+                return null;
+            }
         }
 
         protected ServiceAnswer Post(string path, string body)
         {
-            var data = System.Text.Encoding.UTF8.GetBytes(body);
+            try
+            {
+                var data = System.Text.Encoding.UTF8.GetBytes(body);
 
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"http://{Host}/{path}");
-            request.Credentials = CredentialCache.DefaultCredentials;
-            request.Method = "POST";
-            request.ContentType = "application/json";
-            request.ContentLength = data.Length;
-            request.UserAgent = "gateway 1.0.0";
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create($"http://{Host}/{path}");
+                request.Credentials = CredentialCache.DefaultCredentials;
+                request.Method = "POST";
+                request.ContentType = "application/json";
+                request.ContentLength = data.Length;
+                request.UserAgent = "gateway 1.0.0";
 
-            Stream requestStream = request.GetRequestStream();
-            requestStream.Write(data, 0, data.Length);
-            requestStream.Close();
+                Stream requestStream = request.GetRequestStream();
+                requestStream.Write(data, 0, data.Length);
+                requestStream.Close();
 
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            Stream dataStream = response.GetResponseStream();
-            StreamReader reader = new StreamReader(dataStream);
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                Stream dataStream = response.GetResponseStream();
+                StreamReader reader = new StreamReader(dataStream);
 
-            string responseFromServer = reader.ReadToEnd();
+                string responseFromServer = reader.ReadToEnd();
 
-            ;
-            reader.Close();
-            dataStream.Close();
+                
+                reader.Close();
+                dataStream.Close();
 
-            return new ServiceAnswer(response.StatusCode, responseFromServer);
-            response.Close();
+                return new ServiceAnswer(response.StatusCode, responseFromServer);
+                response.Close();
+            }
+            catch(WebException ex)
+            {
+                return new ServiceAnswer(HttpStatusCode.InternalServerError, null);
+            }
         }
     }
 

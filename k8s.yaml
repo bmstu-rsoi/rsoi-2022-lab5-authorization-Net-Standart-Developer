@@ -1,0 +1,217 @@
+apiVersion: v1
+items:
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: gateway
+      name: gateway
+    spec:
+      ports:
+        - name: "80"
+          port: 80
+          targetPort: 80
+      selector:
+        io.kompose.service: gateway
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: loyalty
+      name: loyalty
+    spec:
+      ports:
+        - name: "80"
+          port: 80
+          targetPort: 80
+      selector:
+        io.kompose.service: loyalty
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: payment
+      name: payment
+    spec:
+      ports:
+        - name: "80"
+          port: 80
+          targetPort: 80
+      selector:
+        io.kompose.service: payment
+    status:
+      loadBalancer: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: reservation
+      name: reservation
+    spec:
+      ports:
+        - name: "80"
+          port: 80
+          targetPort: 80
+      selector:
+        io.kompose.service: reservation
+    status:
+      loadBalancer: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: gateway
+      name: gateway
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: gateway
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            io.kompose.service: gateway
+        spec:
+          containers:
+            - env:
+                - name: LOYALTY
+                  value: loyalty:80
+                - name: PAYMENT
+                  value: payment:80
+                - name: RESERVATION
+                  value: reservation:80
+              image: csdevcore/gateway
+              name: gateway
+              ports:
+                - containerPort: 80
+              resources: {}
+          restartPolicy: Always
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: loyalty
+      name: loyalty
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: loyalty
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            io.kompose.service: loyalty
+        spec:
+          containers:
+            - env:
+                - name: DATABASE
+                  value: loyalties
+                - name: DBHOST
+                  value: postgres2
+                - name: DBPORT
+                  value: "5432"
+                - name: PASSWORD
+                  value: test
+                - name: USERNAME
+                  value: program
+              image: csdevcore/loyalty
+              name: loyalty
+              ports:
+                - containerPort: 80
+              resources: {}
+          restartPolicy: Always
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: payment
+      name: payment
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: payment
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            io.kompose.service: payment
+        spec:
+          containers:
+            - env:
+                - name: DATABASE
+                  value: payments
+                - name: DBHOST
+                  value: postgres2
+                - name: DBPORT
+                  value: "5432"
+                - name: PASSWORD
+                  value: test
+                - name: USERNAME
+                  value: program
+              image: csdevcore/payment
+              name: payment
+              ports:
+                - containerPort: 80
+              resources: {}
+          restartPolicy: Always
+    status: {}
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: reservation
+      name: reservation
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          io.kompose.service: reservation
+      strategy: {}
+      template:
+        metadata:
+          creationTimestamp: null
+          labels:
+            io.kompose.service: reservation
+        spec:
+          containers:
+            - env:
+                - name: DATABASE
+                  value: reservations
+                - name: DBHOST
+                  value: postgres2
+                - name: DBPORT
+                  value: "5432"
+                - name: PASSWORD
+                  value: test
+                - name: USERNAME
+                  value: program
+              image: csdevcore/reservation
+              name: reservation
+              ports:
+                - containerPort: 80
+              resources: {}
+          restartPolicy: Always
+    status: {}
+kind: List
+metadata: {}
+

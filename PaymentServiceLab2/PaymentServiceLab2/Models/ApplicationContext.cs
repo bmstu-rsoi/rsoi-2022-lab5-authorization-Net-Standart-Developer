@@ -15,9 +15,10 @@ namespace PaymentServiceLab2.Models
         {
             string host = Environment.GetEnvironmentVariable("DBHOST") ?? "localhost";
             string port = Environment.GetEnvironmentVariable("DBPORT") ?? "54321";
-            string db = Environment.GetEnvironmentVariable("DATABASE") ?? "reservations";
-            string user = Environment.GetEnvironmentVariable("USERNAME") ?? "program";
+            string db = Environment.GetEnvironmentVariable("DATABASE") ?? "payments";
+            string user = "program";
             string password = Environment.GetEnvironmentVariable("PASSWORD") ?? "test";
+
             Console.WriteLine($"Host={host};Port={port};Database={db};Username={user};Password={password}");
             optionsBuilder.UseNpgsql($"Host={host};Port={port};Database={db};Username={user};Password={password}");
         }
