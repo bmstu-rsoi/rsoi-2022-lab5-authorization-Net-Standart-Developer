@@ -9,27 +9,27 @@
     },
     {
       "key": "identityProviderUrl",
-      "value": "",
+      "value": "https://dev-73urcdgst7428q7h.us.auth0.com",
       "enabled": true
     },
     {
       "key": "username",
-      "value": "",
+      "value": "Max",
       "enabled": true
     },
     {
       "key": "password",
-      "value": "",
+      "value": "Max",
       "enabled": true
     },
     {
       "key": "clientId",
-      "value": "",
+      "value": "EJ4YGUKFak2rMpzNJqcJYjrqmnzcuOru",
       "enabled": true
     },
     {
       "key": "clientSecret",
-      "value": "",
+      "value": "${{ secrets.clientSecret }}",
       "enabled": true
     }
   ],
