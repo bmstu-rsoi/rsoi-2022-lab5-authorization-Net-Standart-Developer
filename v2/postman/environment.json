@@ -29,7 +29,7 @@
     },
     {
       "key": "clientSecret",
-      "value": "${{ secrets.clientSecret }}",
+      "value": "nSvUNXgKSDnI3DRfPSJt0W951M57umM0CyXWBBMUWl3vz_ZlExih45VC9RAKHhSh",
       "enabled": true
     }
   ],
